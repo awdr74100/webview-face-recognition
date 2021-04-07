@@ -47,7 +47,10 @@ export default new Vuex.Store({
       try {
         await axios.post(url, { uid, soundId });
       } catch (error) {
-        console.log(error);
+        vm.notify({
+          group: 'custom-template',
+          title: error.message,
+        });
       }
     },
   },
