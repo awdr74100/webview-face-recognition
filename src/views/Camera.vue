@@ -69,14 +69,15 @@ export default {
       if (this.modelStatus !== 'loaded') await this.loadModels();
       const webcam = document.querySelector('.webcam');
       const oldCanvas = document.querySelector('.face');
+      const overlay = document.querySelector('.overlay');
       const canvas = faceapi.createCanvasFromMedia(webcam);
       const canvasSize = { width: webcam.clientWidth, height: webcam.clientHeight };
       canvas.classList.add('face');
       faceapi.matchDimensions(canvas, canvasSize);
       // clear canvas
-      if (oldCanvas) document.querySelector('.overlay').removeChild(oldCanvas);
+      if (oldCanvas) overlay.removeChild(oldCanvas);
       // append canvas
-      document.querySelector('.overlay').appendChild(canvas);
+      overlay.appendChild(canvas);
       // load labels
       const label = this.loadLabel();
       const labels = label ? [label] : [];

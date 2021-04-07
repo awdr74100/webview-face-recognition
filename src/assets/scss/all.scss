@@ -12,3 +12,14 @@ video {
 canvas {
   position: absolute;
 }
+
+.v-fade-left-enter-active,
+.v-fade-left-leave-active,
+.v-fade-left-move {
+  transition: all 0.5s;
+}
+.v-fade-left-enter,
+.v-fade-left-leave-to {
+  opacity: 0;
+  transform: translateX(-500px) scale(0.2);
+}

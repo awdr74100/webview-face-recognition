@@ -1,8 +1,7 @@
 <template>
   <div class="container d-flex justify-content-center align-items-center vw-100 vh-100">
     <button
-      v-if="!errorMessage"
-      class="btn btn-primary font-weight-bolder py-0 px-0 d-flex align-items-center"
+      class="btn btn-primary font-weight-bold py-0 px-0 d-flex align-items-center"
       @click.prevent="signIn"
     >
       <div
@@ -13,7 +12,6 @@
       </div>
       <span class="ml-3 mr-3">Sign in with Google</span>
     </button>
-    <h2 v-else class="text-secondary">{{ errorMessage }}</h2>
   </div>
 </template>
 
@@ -21,9 +19,6 @@
 import { auth, provider } from '@/connection/firebase';
 
 export default {
-  data: () => ({
-    errorMessage: '',
-  }),
   created() {
     this.authStateChange();
   },
@@ -37,13 +32,19 @@ export default {
         if (!user) return;
         const result = await this.$store.dispatch('signin', { uid: user.uid });
         if (!result) {
-          this.errorMessage = '用戶尚未註冊';
+          this.$notify({
+            group: 'custom-template',
+            title: '此帳號尚未進行註冊',
+          });
           return;
         }
         this.$store.commit('ISSIGNIN', true);
         this.$router.push({ path: '/camera' });
       } catch (error) {
-        console.log(error);
+        this.$notify({
+          group: 'custom-template',
+          title: error.message,
+        });
       }
     },
   },

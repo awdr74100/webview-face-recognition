@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-// import $ from 'jquery';
 import axios from 'axios';
+
+const vm = Vue;
 
 Vue.use(Vuex);
 
@@ -34,7 +35,11 @@ export default new Vuex.Store({
         commit('SETFEATURES', data.user.features);
         return true;
       } catch (error) {
-        return console.log(error);
+        vm.notify({
+          group: 'custom-template',
+          title: error.message,
+        });
+        return false;
       }
     },
     async callServer(context, { uid, soundId }) {
