@@ -1,0 +1,14 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import './helpers/custom';
+@import '~bootstrap/scss/bootstrap';
+
+.overlay {
+  position: relative;
+}
+video {
+  position: relative;
+}
+canvas {
+  position: absolute;
+}
