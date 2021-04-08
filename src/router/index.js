@@ -24,10 +24,10 @@ const router = new VueRouter({
   routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (!to.meta.requiresAuth) return next();
-//   if (router.app.$options.store.state.isSignIn) return next();
-//   return next('/');
-// });
+router.beforeEach((to, from, next) => {
+  if (!to.meta.requiresAuth) return next();
+  if (router.app.$options.store.state.isSignIn) return next();
+  return next('/');
+});
 
 export default router;
