@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { Modal } from 'bootstrap/dist/js/bootstrap.bundle';
 import axios from 'axios';
 
 const vm = Vue;
@@ -7,21 +8,23 @@ const vm = Vue;
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  strict: process.env.NODE_ENV === 'development',
+  strict: import.meta.env.DEV,
   state: {
     user: {
       uid: '',
       displayName: '',
       email: '',
+      soundId: '',
     },
     isSignIn: false,
     isLoading: false,
     loadingStatus: '',
     features: [],
+    showModal: false,
   },
   actions: {
     async signin({ commit }, { uid }) {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/users/signin`;
+      const url = `${import.meta.env.VITE_APP_BACKEND_URL}/api/users/signin`;
       try {
         const { data } = await axios.post(url, { uid });
 
@@ -42,10 +45,10 @@ export default new Vuex.Store({
         return false;
       }
     },
-    async callServer(context, { uid, soundId }) {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/server/call`;
+    async callServer(context, { uid, soundId, door }) {
+      const url = `${import.meta.env.VITE_APP_BACKEND_URL}/api/server/call`;
       try {
-        await axios.post(url, { uid, soundId });
+        await axios.post(url, { uid, soundId, door });
       } catch (error) {
         vm.notify({
           group: 'custom-template',
@@ -72,6 +75,14 @@ export default new Vuex.Store({
     },
     SETFEATURES(state, features) {
       state.features = features;
+    },
+    SHOWMODAL(state, status) {
+      const modal = new Modal('#customModal', {
+        backdrop: 'static',
+        keyboard: false,
+      });
+      state.showModal = status;
+      modal[status ? 'show' : 'hide']();
     },
   },
 });

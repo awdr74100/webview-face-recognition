@@ -1,19 +1,16 @@
 import Vue from 'vue';
 
-import Notifications from 'vue-notification';
-import { WebCam } from 'vue-web-cam';
-import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/vue-loading.css';
+import './plugins/vue-fontawesome';
+import './plugins/vue-notification';
+import './plugins/vue-web-cam';
+import './plugins/vue-loading-overlay';
+import './plugins/vue-axios';
+
 import 'bootstrap/dist/js/bootstrap.bundle';
 
 import App from './App.vue';
 import router from './router';
 import store from './store';
-
-Vue.use(Notifications);
-
-Vue.component('vue-web-cam', WebCam);
-Vue.component('loading', Loading);
 
 Vue.config.productionTip = false;
 

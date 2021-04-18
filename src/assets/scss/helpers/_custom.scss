@@ -2,6 +2,6 @@ $custom-colors: (
   'teal': $teal,
 );
 
-$font-weight-bold: 500;
-
 $theme-colors: map-merge($theme-colors, $custom-colors);
+
+$font-weight-bold: 500;

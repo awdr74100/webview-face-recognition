@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import SignIn from '@/views/SignIn.vue';
 
 Vue.use(VueRouter);
 
@@ -8,7 +7,7 @@ const routes = [
   {
     path: '/',
     name: 'signin',
-    component: SignIn,
+    component: () => import('@/views/SignIn.vue'),
   },
   {
     path: '/camera',
@@ -20,14 +19,8 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
+  base: import.meta.env.BASE_URL,
   routes,
-});
-
-router.beforeEach((to, from, next) => {
-  if (!to.meta.requiresAuth) return next();
-  if (router.app.$options.store.state.isSignIn) return next();
-  return next('/');
 });
 
 export default router;

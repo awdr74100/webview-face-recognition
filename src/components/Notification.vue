@@ -1,5 +1,10 @@
 <template>
-  <notifications group="custom-template" :width="300" :max="3" position="top center">
+  <notifications
+    group="custom-template"
+    :width="300"
+    :max="3"
+    position="top center"
+  >
     <template slot="body" slot-scope="props">
       <div class="custom-template">
         <div class="custom-template-content">
@@ -8,7 +13,7 @@
           </div>
         </div>
         <div class="custom-template-close" @click="props.close">
-          <i class="fas fa-times"></i>
+          <font-awesome-icon :icon="['fas', 'times']" />
         </div>
       </div>
     </template>

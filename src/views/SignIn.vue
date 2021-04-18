@@ -1,5 +1,7 @@
 <template>
-  <div class="container d-flex justify-content-center align-items-center vw-100 vh-100">
+  <div
+    class="container d-flex justify-content-center align-items-center vw-100 vh-100"
+  >
     <button
       class="btn btn-primary font-weight-bold py-0 px-0 d-flex align-items-center"
       @click.prevent="signIn"
@@ -10,42 +12,25 @@
       >
         <span class="icon m-2"></span>
       </div>
-      <span class="ml-3 mr-3">Sign in with Google</span>
+      <span class="mx-3">Sign in with Google</span>
     </button>
   </div>
 </template>
 
 <script>
-import { auth, provider } from '@/connection/firebase';
+import qs from 'qs';
 
 export default {
-  created() {
-    this.authStateChange();
-  },
   methods: {
     signIn() {
-      auth.signInWithRedirect(provider);
-    },
-    async authStateChange() {
-      try {
-        const { user } = await auth.getRedirectResult();
-        if (!user) return;
-        const result = await this.$store.dispatch('signin', { uid: user.uid });
-        if (!result) {
-          this.$notify({
-            group: 'custom-template',
-            title: '此帳號尚未進行註冊',
-          });
-          return;
-        }
-        this.$store.commit('ISSIGNIN', true);
-        this.$router.push({ path: '/camera' });
-      } catch (error) {
-        this.$notify({
-          group: 'custom-template',
-          title: error.message,
-        });
-      }
+      const url = 'https://accounts.google.com/o/oauth2/v2/auth?';
+      const params = qs.stringify({
+        scope: 'email profile',
+        client_id: import.meta.env.VITE_APP_OAUTH_ID,
+        response_type: 'token',
+        redirect_uri: `${window.location.origin}/camera`,
+      });
+      window.location.href = url + params;
     },
   },
 };
@@ -55,7 +40,7 @@ export default {
 .icon {
   width: 24px;
   height: 24px;
-  background-image: url('~@/assets/img/google.svg');
+  background-image: url('@/assets/img/google.svg');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
